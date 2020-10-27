@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import Welcome from "../Welcome/Welcome";
 import Loading from "../Loading/Loading";
@@ -12,83 +12,74 @@ import {
   getFollowings,
 } from "../../api/GitHub/GitHub";
 
-class App extends React.Component {
-  state = {
-    userInfo: null,
-    orgs: [],
-    repos: [],
-    error: null,
-    loading: false,
-    followers: [],
-    followings: [],
-  };
+export default function App() {
+  const [orgs, setOrgs] = useState([]);
+  const [repos, setRepos] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [followings, setFollowings] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  const [error, setError] = useState(null);
 
-  onSubmitUser = async (userName) => {
-    this.resetState();
+  const onSubmitUser = async (userName) => {
+    resetState();
     try {
-      this.setState({ loading: true });
+      setLoading(true);
       const userInfo = await getUserData(userName);
       const userRepos = await getRepos(userName);
       const followers = await getFollowers(userName);
       const followings = await getFollowings(userName);
 
-      this.setState({
-        userInfo: userInfo.user,
-        orgs: userInfo.orgs,
-        repos: userRepos,
-        followers: followers,
-        followings: followings,
-        loading: false,
-      });
+      setOrgs(userInfo.orgs);
+      setRepos(userRepos);
+      setFollowers(followers);
+      setFollowings(followings);
+      setLoading(false);
+      setUserInfo(userInfo.user);
     } catch (error) {
       if (userName === "") {
-        this.resetState();
+        resetState();
       } else {
-        this.setState({ error: "User not found! ", loading: false });
+        setError("User not found! ");
+        setLoading(false);
       }
     }
   };
 
-  displayBody = () => {
-    if (this.state.error) {
-      return <Error error={this.state.error} />;
-    } else if (this.state.loading) {
+  const displayBody = () => {
+    if (error) {
+      return <Error error={error} />;
+    } else if (loading) {
       return <Loading />;
-    } else if (this.state.userInfo) {
+    } else if (userInfo) {
       return (
         <User
-          userInfo={this.state.userInfo}
-          orgs={this.state.orgs}
-          repos={this.state.repos}
-          followers={this.state.followers}
-          followings={this.state.followings}
+          userInfo={userInfo}
+          orgs={orgs}
+          repos={repos}
+          followers={followers}
+          followings={followings}
         />
       );
-    } else if (!this.state.userInfo) {
+    } else if (!userInfo) {
       return <Welcome />;
     }
   };
 
-  resetState = () => {
-    this.setState({
-      userInfo: null,
-      orgs: [],
-      repos: [],
-      error: null,
-      loading: false,
-      followers: [],
-      followings: [],
-    });
+  const resetState = () => {
+    setOrgs([]);
+    setRepos([]);
+    setFollowers([]);
+    setFollowings([]);
+    setLoading(false);
+    setUserInfo(null);
+    setError(null);
   };
 
-  render() {
-    return (
-      <div className="ui container">
-        <SearchBar onSubmit={this.onSubmitUser} />
-        {this.displayBody()}
-      </div>
-    );
-  }
+  return (
+    <div className="ui container">
+      <SearchBar onSubmit={onSubmitUser} />
+      {displayBody()}
+    </div>
+  );
 }
-
-export default App;

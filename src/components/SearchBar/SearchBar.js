@@ -1,43 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 
-class SearchBar extends React.Component {
-  state = { userName: "" };
+export default function SearchBar(props) {
+  const [userName, setUserName] = useState("");
 
-  onInputChange = async (event) => {
-    await this.setState({ userName: event.target.value });
+  const onInputChange = (event) => {
+    setUserName(event.target.value);
   };
 
-  onFormSubmit = (event) => {
+  const onFormSubmit = (event) => {
     event.preventDefault();
-    this.props.onSubmit(this.state.userName);
+    props.onSubmit(userName);
   };
 
-  render() {
-    return (
-      <div className="search-bar ui segment">
-        <form onSubmit={this.onFormSubmit} className="ui form">
-          <div className="field ui grid">
-            <div className="ui row">
-              <label className="two wide column">
-                <i className="huge github alternate icon"></i>
-              </label>
-              <div className="twelve wide column">
-                <div className="ui icon huge input">
-                  <input
-                    type="text"
-                    placeholder="Search for a Github user or Organization"
-                    value={this.state.userName}
-                    onChange={this.onInputChange}
-                  />
-                  <i className="circular search link icon"></i>
-                </div>
+  return (
+    <div className="search-bar ui segment">
+      <form onSubmit={onFormSubmit} className="ui form">
+        <div className="field ui grid">
+          <div className="ui row">
+            <label className="two wide column">
+              <i className="huge github alternate icon"></i>
+            </label>
+            <div className="twelve wide column">
+              <div className="ui icon huge input">
+                <input
+                  type="text"
+                  placeholder="Search for a Github user or Organization"
+                  value={userName}
+                  onChange={onInputChange}
+                />
+                <i className="circular search link icon"></i>
               </div>
             </div>
           </div>
-        </form>
-      </div>
-    );
-  }
+        </div>
+      </form>
+    </div>
+  );
 }
-
-export default SearchBar;

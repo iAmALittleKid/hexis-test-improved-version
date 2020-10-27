@@ -1,9 +1,9 @@
 import React from "react";
 import "./UserCard.css";
 
-class UserCard extends React.Component {
-  displayCard = () => {
-    if (this.props.userInfo) {
+export default function UserCard(props) {
+  const displayCard = () => {
+    if (props.userInfo) {
       const {
         avatar_url,
         name,
@@ -12,9 +12,9 @@ class UserCard extends React.Component {
         public_repos,
         followers,
         following,
-      } = this.props.userInfo;
+      } = props.userInfo;
 
-      const { onInfoSelect } = this.props;
+      const { onInfoSelect } = props;
 
       return (
         <div>
@@ -48,9 +48,7 @@ class UserCard extends React.Component {
                     onClick={() => onInfoSelect("orgs")}
                   >
                     Organization
-                    <span className="badge badge-orange">
-                      {this.props.orgs}
-                    </span>
+                    <span className="badge badge-orange">{props.orgs}</span>
                   </span>
                   <span
                     className="col-sm-3 col-md-3 col-lg-3"
@@ -77,9 +75,5 @@ class UserCard extends React.Component {
     return <div>Could not load the user info</div>;
   };
 
-  render() {
-    return this.displayCard();
-  }
+  return displayCard();
 }
-
-export default UserCard;
