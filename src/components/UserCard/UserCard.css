@@ -1,0 +1,61 @@
+.profile-pic-container {
+  height: 100%;
+}
+
+.profile-pic {
+  height: 200px;
+  width: 210px;
+  margin-left: -15px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+}
+
+.user-card {
+  height: 200px;
+  background-color: #c7c7c7;
+  border-radius: 25px;
+}
+
+.info-summary-container {
+  height: 100%;
+  padding: 10px;
+}
+
+.info-summary {
+  position: relative;
+  height: 100%;
+}
+
+.bio-info {
+  margin-top: 20px;
+}
+
+.bottom-link {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.bottom-link > span {
+  margin-left: -5px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 30px;
+  align-items: center;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.bottom-link > span:hover {
+  background-color: #1e9bff;
+}
+
+.badge {
+  margin-left: 5px;
+}
+
+.badge-orange {
+  background-color: darkorange;
+}
