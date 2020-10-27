@@ -25,7 +25,7 @@ class SearchBar extends React.Component {
                 <div className="ui icon huge input">
                   <input
                     type="text"
-                    placeholder="Search"
+                    placeholder="Search for a Github user or Organization"
                     value={this.state.userName}
                     onChange={this.onInputChange}
                   />
